@@ -64,16 +64,7 @@ handleMouseLeave(index) {
       return index + 1;
     }
 
-     // if this.state.isPlaying
-        // if this.state.currentSong.title === song.title
-          // display the pause icon
-        // else {
-          // Disply the song number
-      // else this.state.isPlaying === false
-        // if this.state.isHovering === index + 1
-          //display the play icon
-        // else {
-          // display the song number
+    
 
 
   handleSongHover(song) {
