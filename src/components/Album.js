@@ -55,6 +55,12 @@ class Album extends Component {
        } else {
          return (<ion-icon name="play" />)
        }
+     } else if(!this.state.isHovering && isSameSong) {
+       if(this.state.isPlaying) {
+        return (<ion-icon name="pause" />)
+       } else {
+         return (<ion-icon name="play" />)
+       }
      }
       return index + 1;
     }
@@ -85,6 +91,13 @@ class Album extends Component {
   this.play();
 }
 
+handleNextClick() {
+const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+const nextIndex = Math.min(5, currentIndex +1);
+const nextSong = this.state.album.songs[nextIndex];
+this.setSong(nextSong);
+this.play();
+}
   render() {
     console.log(this.state.album.songs)
     return (
@@ -121,6 +134,7 @@ class Album extends Component {
                currentSong={this.state.currentSong}
                handleSongClick={() => this.handleSongClick(this.state.currentSong)}
                handlePrevClick={() => this.handlePrevClick()}
+               handleNextClick={() => this.handleNextClick()}
             />
 
     </section>
