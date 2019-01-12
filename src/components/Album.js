@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import albumData from './../data/albums';
 import PlayerBar from './PlayerBar';
 
-
 class Album extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +17,8 @@ class Album extends Component {
       duration: album.songs[0].duration,
       isPlaying: false,
       isHovering: false,
+      volume: 0,
+      volumeSrc: album.songs[0].audioSrc
     };
 
 
@@ -25,23 +26,33 @@ class Album extends Component {
         this.audioElement.src = album.songs[0].audioSrc;
       }
 
-      componentDidMpunt() {
+      componentDidMount() {
         this.eventListeners ={
           timeupdate: e => {
             this.setState({ currentTime: this.audioElement.currentTIme });
           },
           durationChange: e => {
             this.setState({ duration: this.audioElement.duration });
+          },
+          volumeChange: e => {
+            this.setState({ volume: this.audioElement.volume});
+          },
+          volumeSrcChange: e => {
+            this.setState({ volumeSrc: this.audioElement.volumeSrc });
           }
         };
         this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
         this.audioElement.addEventListener('durationChange', this.eventListeners.durationchange);
+        this.audioElement.addEventListener('volumeChange', this.eventListeners.volumeChange);
+        this.audioElement.addEventListener('volumeSrcChange', this.eventListeners.volumeSrcChange);
       }
 
       componentWillUnmount() {
         this.audioElement.src = null;
         this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
         this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+        this.audioElement.removeEventListener('volumeChange', this.eventListeners.volumeChange);
+        this.audioElement.removeEventLIstener('volumeSrcChange', this.eventListeners.volumeSrcChange);
       }
 
       play() {
@@ -119,8 +130,8 @@ const nextSong = this.state.album.songs[nextIndex];
 this.setSong(nextSong);
 this.play();
 }
-<<<<<<< HEAD
-=======
+
+
 
 handleTimeChange(e) {
   const newTime = this.audioElement.duration * e.target.value;
@@ -128,7 +139,12 @@ handleTimeChange(e) {
   this.setState({ currentTime: newTime });
 }
 
->>>>>>> checkpoint-player-bar-range-inputs
+handleVolumeChange(e) {
+  const newVolume = this.audioElement.volumeSrcChange * e.target.value;
+  this.audioElement.volumeChange = newVolume;
+  this.setState ({ volumeChange: newVolume });
+}
+
   render() {
     console.log(this.state.album.songs)
     return (
@@ -154,6 +170,7 @@ handleTimeChange(e) {
            <td>{this.playOrPauseIcon(song, index)}</td>
             <td>{song.title}</td>
             <td>{song.duration}</td>
+
           </tr>
 
         )
@@ -165,13 +182,13 @@ handleTimeChange(e) {
                currentSong={this.state.currentSong}
                currentTime={this.audioElement.currentTIme}
                duration={this.audioElement.duration}
+               volume={this.audioElement.volume}
+               volumeSrc={this.audioElement.volumeSrc}
                handleSongClick={() => this.handleSongClick(this.state.currentSong)}
                handlePrevClick={() => this.handlePrevClick()}
                handleNextClick={() => this.handleNextClick()}
-<<<<<<< HEAD
-=======
                handleTimeChange={(e) => this.handleTimeChange(e)}
->>>>>>> checkpoint-player-bar-range-inputs
+               handleVolumeChange={(e) => this.handleVolumeChange(e)}
             />
 
     </section>
