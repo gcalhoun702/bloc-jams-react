@@ -82,6 +82,7 @@ class Album extends Component {
          return (<ion-icon name="play" />)
        }
      } else if(!this.state.isHovering && isSameSong) {
+         return index + 1;
        if(this.state.isPlaying) {
         return (<ion-icon name="pause" />)
        } else {
@@ -129,14 +130,17 @@ handleVolumeChange(e) {
 }
 
 formatTime(currentTime) {
-  const seconds = currentTime % 3600 % 60;
+  const seconds = currentTime % 60;
   const minutes = Math.floor(currentTime % 3600 / 60);
 
   var MM = minutes < 10 ? "0" + minutes : minutes;
   var SS = seconds < 10 ? "0" + seconds : seconds;
 
+  var displayMM = MM.substr(1,2);
+  var displaySS = SS.toFixed(0);
+
   if(this.state.isPlaying) {
-    return MM + ":" + SS
+    return displayMM + ":" + displaySS
   } else{
     return "-:--"
   }
