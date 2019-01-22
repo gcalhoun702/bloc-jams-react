@@ -81,16 +81,13 @@ class Album extends Component {
        } else {
          return (<ion-icon name="play" />)
        }
-     } else if(!this.state.isHovering && isSameSong) {
-         return index + 1;
-       if(this.state.isPlaying) {
-        return (<ion-icon name="pause" />)
-       } else {
-         return (<ion-icon name="play" />)
-       }
+     } else if (!this.state.isHovering && this.state.isPlaying) {
+       if(isSameSong) {
+          return (<ion-icon name="pause" />)
      }
-      return index + 1;
-    }
+   }
+   return index + 1;
+ }
 
   handleSongHover(song) {
     this.setState({
@@ -185,7 +182,7 @@ formatTime(currentTime) {
                isPlaying={this.state.isPlaying}
                currentSong={this.state.currentSong}
                currentTime={this.audioElement.currentTIme}
-               duration={this.state.currentSong.duration}
+               duration={this.audioElement.duration}
                currentVolume={this.audioElement.volume}
                handleSongClick={() => this.handleSongClick(this.state.currentSong)}
                handlePrevClick={() => this.handlePrevClick()}
