@@ -38,14 +38,14 @@ class Album extends Component {
           },
         };
         this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
-        this.audioElement.addEventListener('durationChange', this.eventListeners.durationchange);
+        this.audioElement.addEventListener('durationChange', this.eventListeners.durationChange);
         this.audioElement.addEventListener('volumeChange', this.eventListeners.volumeChange);
       }
 
       componentWillUnmount() {
         this.audioElement.src = null;
         this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
-        this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+        this.audioElement.removeEventListener('durationChange', this.eventListeners.durationChange);
         this.audioElement.removeEventListener('volumeChange', this.eventListeners.volumeChange);
         }
 
@@ -127,22 +127,28 @@ handleVolumeChange(e) {
 }
 
 formatTime(currentTime) {
-  const seconds = currentTime % 60;
+  const seconds = Math.floor(currentTime % 60);
   const minutes = Math.floor(currentTime % 3600 / 60);
 
   var MM = minutes < 10 ? "0" + minutes : minutes;
   var SS = seconds < 10 ? "0" + seconds : seconds;
 
-  var displayMM = MM.substr(1,2);
-  var displaySS = SS.toFixed(0);
-
   if(this.state.isPlaying) {
-    return displayMM + ":" + displaySS
+    return MM + ":" + SS
   } else{
     return "-:--"
   }
 
+}
 
+formatDuration(duration) {
+  const seconds = Math.floor(duration % 60);
+  const minutes = Math.floor(duration % 3600 / 60);
+
+  var MM = minutes < 10 ? "0" + minutes : minutes;
+  var SS = seconds < 10 ? "0" + seconds : seconds;
+
+  return MM + ":" + SS
 }
 
 
@@ -166,7 +172,7 @@ formatTime(currentTime) {
         </colgroup>
         <tbody>
         {this.state.album.songs.map( (song,index) =>
-          <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleSongHover(song)} onMouseLeave={() => this.handleSongHover()} >
+          <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleSongHover(song)} onMouseLeave={() => this.handleSongHover()}  >
 
            <td>{this.playOrPauseIcon(song, index)}</td>
             <td>{song.title}</td>
@@ -189,7 +195,7 @@ formatTime(currentTime) {
                handleNextClick={() => this.handleNextClick()}
                handleTimeChange={(e) => this.handleTimeChange(e)}
                handleVolumeChange={(e) => this.handleVolumeChange(e)}
-               formatTime={() => this.formatTime(this.state.currentSong.duration)}
+               formatTime={(e) => this.formatTime(e)}
 
             />
 
