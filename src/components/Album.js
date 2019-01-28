@@ -141,14 +141,17 @@ formatTime(currentTime) {
 
 }
 
-formatDuration(duration) {
-  const seconds = Math.floor(duration % 60);
-  const minutes = Math.floor(duration % 3600 / 60);
+formatDuration(song) {
+  const seconds = Math.floor(song.duration % 60);
+  const minutes = Math.floor(song.duration % 3600 / 60);
 
   var MM = minutes < 10 ? "0" + minutes : minutes;
   var SS = seconds < 10 ? "0" + seconds : seconds;
 
-  return MM + ":" + SS
+  if(this.state.duration) {
+    return MM + ":" + SS
+  }
+
 }
 
 
@@ -172,12 +175,11 @@ formatDuration(duration) {
         </colgroup>
         <tbody>
         {this.state.album.songs.map( (song,index) =>
-          <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleSongHover(song)} onMouseLeave={() => this.handleSongHover()}  >
+         <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleSongHover(song)} onMouseLeave={() => this.handleSongHover()}  >
 
-           <td>{this.playOrPauseIcon(song, index)}</td>
+            <td>{this.playOrPauseIcon(song, index)}</td>
             <td>{song.title}</td>
-            <td>{song.duration}</td>
-
+            <td>{this.formatDuration(song)}</td>
           </tr>
 
         )
