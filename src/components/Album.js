@@ -1,3 +1,4 @@
+import './../components/Album.css';
 import React, { Component } from 'react';
 import albumData from './../data/albums';
 import PlayerBar from './PlayerBar';
@@ -158,34 +159,53 @@ formatDuration(song) {
   render() {
     console.log(this.state.album.songs)
     return (
-      <section className="album">
-        <section id="album-info">
-        <img id="album-cover-art" src={ this.state.album.albumCover || '' } alt={this.state.album.title} />
-        <div className="album-details">
-         <h1 id="album-title">{this.state.album.title}</h1>
-         <h2 className="artist">{this.state.album.artist}</h2>
-         <div id="release-info">{this.state.album.releaseInfo}</div>
-       </div>
+      <section className="album container-fluid">
+        <section id="album-info row">
+        <div className="col-12">
+          <img id="album-cover-art" src={ this.state.album.albumCover || '' } alt={this.state.album.title} className="img-thumbnail" />
+        </div>
+        <div className="album-details col-12">
+          <div className="row">
+            <div className="col-12">
+              <h1 id="album-title">{this.state.album.title}</h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <h2 className="artist">{this.state.album.artist}</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <div id="release-info">{this.state.album.releaseInfo}</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <table id="song-list">
+                <colgroup>
+                  <col id="song-number-column" />
+                  <col id="song-title-column" />
+                  <col id="song-duration-column" />
+                </colgroup>
+                <tbody>
+                  {this.state.album.songs.map( (song,index) =>
+                     <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleSongHover(song)} onMouseLeave={() => this.handleSongHover()}  >
+
+                        <td>{this.playOrPauseIcon(song, index)}</td>
+                        <td>{song.title}</td>
+                        <td>{this.formatDuration(song)}</td>
+                      </tr>
+                    )
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </section>
-      <table id="song-list">
-        <colgroup>
-          <col id="song-number-column" />
-          <col id="song-title-column" />
-          <col id="song-duration-column" />
-        </colgroup>
-        <tbody>
-        {this.state.album.songs.map( (song,index) =>
-         <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleSongHover(song)} onMouseLeave={() => this.handleSongHover()}  >
-
-            <td>{this.playOrPauseIcon(song, index)}</td>
-            <td>{song.title}</td>
-            <td>{this.formatDuration(song)}</td>
-          </tr>
-
-        )
-}
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-12">
       <PlayerBar
                isPlaying={this.state.isPlaying}
                currentSong={this.state.currentSong}
@@ -200,7 +220,8 @@ formatDuration(song) {
                formatTime={(e) => this.formatTime(e)}
 
             />
-
+         </div>
+      </div>   
     </section>
     );
   }

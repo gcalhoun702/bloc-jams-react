@@ -1,6 +1,28 @@
 .App {
-  text-align: center;
+  text-align: Center;
+  color: white;
+  background-color: #D4972E;
+  border-style: solid;
+  border-color: #A19F8D;
+  border-width: thick;
 }
+
+.img-thumbnail {
+  width: 50%;
+  float: left;
+}
+.album-details {
+float: center;
+}
+
+#song-list {
+  float: center;
+  margin-left: 35%;
+
+
+}
+
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -8,14 +30,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
 }
 
 .App-link {
